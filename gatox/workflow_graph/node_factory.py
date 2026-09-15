@@ -126,15 +126,16 @@ class NodeFactory:
         a new WorkflowNode, caches it, and then returns it.
 
         Args:
-            callee (str): The reference to the called workflow, which could be a relative path
-                          (starting with "./") or a full GitHub path with a specific ref.
+            callee (str): The reference to the called workflow: a path in the caller's own
+                          repository (starting with "./" or "$/") or a full GitHub path
+                          with a specific ref.
             caller_ref (str): The reference (e.g., branch or tag) of the calling workflow.
             caller_repo (str): The name of the repository where the calling workflow resides.
 
         Returns:
             WorkflowNode: The created or cached WorkflowNode instance.
         """
-        if callee.startswith("./"):
+        if callee.startswith(("./", "$/")):
             workflow_name = callee.split("/")[-1]
             workflow_path = f".github/workflows/{workflow_name}"
             repo_name = caller_repo
@@ -145,7 +146,7 @@ class NodeFactory:
             workflow_path = f".github/workflows/{workflow_name}"
         else:
             raise ValueError(
-                f"Invalid callee format: {callee}. Expected format is './path/to/workflow' or 'repo/path@ref'."
+                f"Invalid callee format: {callee}. Expected format is './path/to/workflow', '$/path/to/workflow' or 'repo/path@ref'."
             )
 
         name = f"{repo_name}:{ref}:{workflow_path}"

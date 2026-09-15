@@ -49,6 +49,35 @@ def test_step_node_init_action():
     assert node.params == {"ref": "${{ github.event.pull_request.head.ref }}"}
 
 
+def test_step_node_workspace_action_is_sink():
+    """A "./" action runs code from the checked-out workspace."""
+    node = StepNode(
+        step_data={"uses": "./.github/actions/build"},
+        ref="main",
+        repo_name="test/repo",
+        workflow_path=".github/workflows/test.yml",
+        job_name="build",
+        step_number=1,
+    )
+
+    assert node.is_sink
+
+
+def test_step_node_self_repository_action_is_not_sink():
+    """A "$/" action comes from the repository at the running commit, so a
+    poisoned workspace cannot change it."""
+    node = StepNode(
+        step_data={"uses": "$/.github/actions/build"},
+        ref="main",
+        repo_name="test/repo",
+        workflow_path=".github/workflows/test.yml",
+        job_name="build",
+        step_number=1,
+    )
+
+    assert not node.is_sink
+
+
 def test_step_node_init_unknown():
     """Test initialization of StepNode with unknown type"""
     step_data = {"name": "unknown step"}

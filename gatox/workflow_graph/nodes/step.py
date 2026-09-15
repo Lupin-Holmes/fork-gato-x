@@ -188,6 +188,8 @@ class StepNode(Node):
             if "require('." in contents:
                 self.is_sink = True
         elif self.uses.startswith("./"):
+            # A "$/" action is not a sink: the runner reads it from the repository at
+            # the running commit, not from the checked-out workspace.
             self.__step_data = self.uses
             self.is_sink = True
         elif "ruby/setup-ruby" in self.uses:

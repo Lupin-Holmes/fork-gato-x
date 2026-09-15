@@ -423,7 +423,7 @@ def decompose_action_ref(action_path: str, repo_name: str):
         "key": action_path,
         "path": action_path.split("@")[0] if "@" in action_path else action_path,
         "ref": action_path.split("@")[1] if "@" in action_path else "",
-        "local": action_path.startswith("./"),
+        "local": action_path.startswith(("./", "$/")),
         "docker": False,
     }
 

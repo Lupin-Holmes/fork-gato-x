@@ -166,6 +166,22 @@ def test_decompose_action_ref_local_action():
     assert result == expected
 
 
+def test_decompose_action_ref_self_repository_action():
+    """A "$/" path names the caller's own repository, like "./"."""
+    action_path = "$/local-action"
+    repo_name = "test/repo"
+    result = decompose_action_ref(action_path, repo_name)
+    expected = {
+        "key": "$/local-action",
+        "path": "local-action",
+        "ref": "",
+        "local": True,
+        "docker": False,
+        "repo": "test/repo",
+    }
+    assert result == expected
+
+
 def test_decompose_action_ref_docker_action():
     action_path = "docker://alpine:3.8"
     repo_name = "test/repo"
