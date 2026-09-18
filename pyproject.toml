@@ -39,7 +39,7 @@ docs = [
     "mkdocs-material"
 ]
 mcp = [
-    "fastmcp"
+    "fastmcp==4.0.5"
 ]
 
 [tool.hatch.build.targets.wheel]
