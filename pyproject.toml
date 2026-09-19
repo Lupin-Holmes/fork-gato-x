@@ -98,6 +98,11 @@ typeCheckingMode = "basic"
 venvPath = "."
 venv = "venv"
 
+[tool.uv]
+override-dependencies = [
+    "idna==3.20.0",
+]
+
 [project.scripts]
 gato-x = "gatox.main:entry"
 gatox = "gatox.main:entry"
