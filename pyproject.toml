@@ -90,6 +90,9 @@ ignore = [
 [tool.ruff.lint.isort]
 known-first-party = ["gatox"]
 
+[tool.uv]
+override-dependencies = ["idna==3.20.0"]
+
 [tool.pyright]
 include = ["gatox"]
 exclude = ["unit_test", "test"]
