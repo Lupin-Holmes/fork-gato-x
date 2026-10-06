@@ -19,7 +19,7 @@ classifiers = [
 dependencies = [
     "colorama",
     "httpx[socks,http2]",
-    "pyyaml",
+    "pyyaml==6.0.3",
     "cryptography",
     "networkx",
     "PyJWT[crypto]"
